@@ -2,6 +2,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <windows.h>
+
 
 const int WIDTH = 500;
 const int HEIGHT = 400;
@@ -184,6 +186,40 @@ void ending_screen(sfRenderWindow* window, sfFont* font, struct player winner)
     }
 }
 
+void counting(sfRenderWindow* window, sfFont* font, struct player p1, struct player p2, int pause)
+{
+    for (int i = 0; i < pause; i++)
+    {
+
+        
+        sfCircleShape* circle = sfCircleShape_create();
+        sfVector2f v1, v2;
+        v1.x = p1.pos_x;
+        v1.y = p1.pos_y;
+
+        v2.x = p2.pos_x;
+        v2.y = p2.pos_y;
+
+        sfCircleShape_setRadius(circle, radius);
+        sfCircleShape_setPosition(circle, v1);
+        sfCircleShape_setFillColor(circle, p1.color);
+        sfRenderWindow_drawCircleShape(window, circle, NULL);
+
+        sfCircleShape_setPosition(circle, v2);
+        sfCircleShape_setFillColor(circle, p2.color);
+        sfRenderWindow_drawCircleShape(window, circle, NULL);
+        sfRenderWindow_display(window);
+        Sleep(500);
+        sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_display(window);
+        Sleep(1000);
+
+    }
+    sfRenderWindow_clear(window, sfBlack);
+    sfRenderWindow_display(window);
+
+}
+
 
 int main()
 {
@@ -238,6 +274,7 @@ int main()
     struct player winner;
     int restart = 0;
     int menu_open = 1;
+    int just_started = 1;
 
     while (sfRenderWindow_isOpen(window))
     {
@@ -362,9 +399,18 @@ int main()
             clear_map();
             menu_open = 1;
             restart = 0;
+            just_started = 2;
         }
 
         sfRenderWindow_display(window);
+
+        if (just_started == 1)
+        {
+            counting(window, font, p1, p2, 3);
+            sfRenderWindow_clear(window, sfBlack);
+            just_started = 0;
+        }
+        if (just_started == 2) just_started = 1;
 
 
         printf("V1: (x,y) = (%d,%d)\n", p1.pos_x, p1.pos_y);
