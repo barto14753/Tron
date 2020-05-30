@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="csfml-3.cpp" />
+    <ClCompile Include="library.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\background.jpg" />
@@ -158,6 +159,9 @@
   <ItemGroup>
     <Font Include="..\..\..\ka1.ttf" />
     <Font Include="..\..\..\LLPIXEL3.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="library.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
